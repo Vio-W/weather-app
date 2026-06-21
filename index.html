@@ -3,32 +3,78 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SkyCast Weather</title>
+  <title>ClimaCast</title>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col items-center justify-center p-5">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col items-center justify-center p-5 font-sans">
+  <header class="w-full max-w-4xl mx-auto flex items-center gap-3 pb-6 border-b border-slate-900">
+    <span class="text-4xl font-black tracking-tight text-white">ClimaCast</span>
+    <span class="text-xl" role="img" aria-label="sun and cloud">☀️☁️</span>
+  </header>
+  <main class="flex-1 flex flex-col items-center justify-center w-full max-w-4xl mx-auto py-10">
+    <div class="w-full bg-slate-900 border border-slate-800/80 rounded-3xl p-8 md:p-12 flex flex-col items-center text-center gap-8 shadow-2xl">
+      <div class="max-w-md">
+        <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight text-slate-100 leading-snug">
+          Discover the weather in every city you embark on
+        </h1>
+      </div>
 
-  <div class="w-full max-w-md bg-slate-900 border border-slate-800 rounded-3xl shadow-2xl p-8 flex flex-col items-center gap-6">
-    <div class="text-center">
-      <h1 class="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
-        SkyCast Weather
-      </h1>
-      <p class="text-xs text-slate-500 mt-1">Enter a city to check the forecast</p>
+      <div class="flex items-center w-full max-w-md" role="search">
+        <input
+          id="city-input"
+          type="text"
+          placeholder="Search for a city..."
+          class="w-full h-12 px-5 border border-slate-800 bg-slate-950 text-slate-100 placeholder-slate-600 rounded-l-2xl focus:outline-none focus:border-blue-500 transition-colors text-sm"
+          />
+          <button id="weather-search-btn" class="h-12 px-6 bg-blue-600 hover:bg-blue-700 text-white font-bold shrink-0 rounded-r-2xl cursor-pointer transition-colors text-sm">
+            Search
+          </button>
+      </div>
+
+      <!-- Decorative fan — visible by default, part of the page's static design -->
+      <div id="weather-card" class="flex justify-center -space-x-6 sm:-space-x-10 w-full max-w-xl items-end">
+        <div class="relative z-0 w-28 sm:w-32 bg-slate-900/80 border border-slate-700/50 rounded-2xl p-4 text-center shadow-xl backdrop-blur-sm rotate-[-8deg] translate-y-6 opacity-80">
+          <span class="text-xl">☁️</span>
+          <div class="text-lg font-bold text-slate-300 mt-1">18°</div>
+        </div>
+        <div class="relative z-20 w-36 sm:w-44 bg-slate-900 border border-blue-500/40 rounded-2xl p-6 text-center shadow-2xl shadow-blue-950/60 scale-110">
+          <span class="text-3xl block">☁️</span>
+          <div class="text-4xl font-black text-white tracking-tight mt-2">26°</div>
+          <div class="text-xs font-bold text-slate-300 mt-1 truncate">Phnom Penh</div>
+        </div>
+        <div class="relative z-0 w-28 sm:w-32 bg-slate-900/80 border border-slate-700/50 rounded-2xl p-4 text-center shadow-xl backdrop-blur-sm rotate-[8deg] translate-y-6 opacity-80">
+          <span class="text-xl">☀️</span>
+          <div class="text-lg font-bold text-slate-300 mt-1">32°</div>
+        </div>
+      </div>
+
+      <!-- Search result — hidden by default, swaps in after a successful search -->
+      <div id="search-result" class="hidden w-full max-w-md flex flex-col items-center gap-6 animate-fade-in">
+        <div class="w-full bg-slate-950 border border-blue-500/30 rounded-3xl p-8 text-center shadow-2xl shadow-blue-950/50">
+          <span id="result-icon" class="text-5xl block">☁️</span>
+          <div id="result-temp" class="text-6xl font-black text-white tracking-tight mt-3">--°</div>
+          <div id="result-city" class="text-lg font-bold text-slate-200 mt-2"></div>
+          <div id="result-condition" class="text-sm text-slate-400 mt-1"></div>
+        </div>
+        <div class="grid grid-cols-3 gap-3 w-full">
+          <div class="bg-slate-900/60 border border-slate-800/60 rounded-xl p-3 text-center">
+            <div class="text-[10px] uppercase tracking-wider text-slate-500 font-semibold">Feels like</div>
+            <div id="result-feels" class="text-base font-bold text-slate-200 mt-1">--°</div>
+          </div>
+          <div class="bg-slate-900/60 border border-slate-800/60 rounded-xl p-3 text-center">
+            <div class="text-[10px] uppercase tracking-wider text-slate-500 font-semibold">Humidity</div>
+            <div id="result-humidity" class="text-base font-bold text-slate-200 mt-1">--%</div>
+          </div>
+          <div class="bg-slate-900/60 border border-slate-800/60 rounded-xl p-3 text-center">
+            <div class="text-[10px] uppercase tracking-wider text-slate-500 font-semibold">Wind</div>
+            <div id="result-wind" class="text-base font-bold text-slate-200 mt-1">-- m/s</div>
+          </div>
+        </div>
+        <button id="reset-btn" class="text-xs text-slate-500 hover:text-slate-300 underline underline-offset-2 transition-colors">
+          ← Search another city
+        </button>
+      </div>
     </div>
-
-    <div class="flex items-center w-full" role="search">
-      <input
-        id="city-input" 
-        type="text" 
-        placeholder="Search city e.g., Paris..." 
-        class="w-full h-12 px-4 border border-slate-800 bg-slate-950 text-slate-100 placeholder-slate-600 rounded-l-2xl focus:outline-none focus:border-blue-500 transition-colors text-sm"
-      />
-      <button id="weather-search-btn" class="h-12 px-5 bg-blue-600 hover:bg-blue-700 text-white font-bold shrink-0 rounded-r-2xl cursor-pointer transition-colors text-sm">
-        Search
-      </button>
-    </div>
-
-    <div id="weather-card" class="hidden w-full bg-slate-950 border border-slate-800 rounded-2xl p-6 flex flex-col items-center text-center"></div>
-  </div>
+  </main>
 
   <script type="module" src="/src/main.js"></script>
 </body>
