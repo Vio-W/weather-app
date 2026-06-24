@@ -1,6 +1,3 @@
-// Hand-built line icons so weather symbols match the UI's stroke-based
-// aesthetic instead of relying on inconsistent OS emoji rendering.
-
 export const sunIcon = `
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" class="w-full h-full">
     <circle cx="12" cy="12" r="4.5"/>
