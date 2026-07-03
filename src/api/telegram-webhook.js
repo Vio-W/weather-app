@@ -1,7 +1,7 @@
 import { Bot, webhookCallback, InlineKeyboard } from "grammy";
 
 const bot = new Bot(process.env.BOT_TOKEN);
-const MINI_APP_URL = "https://your-app.vercel.app"; // your frontend URL
+const MINI_APP_URL = "https://weather-app-violet3799.vercel.app/"; // your frontend URL
 
 bot.command("start", async (ctx) => {
   const keyboard = new InlineKeyboard().webApp("🚌 Open BookMeBus", MINI_APP_URL);
